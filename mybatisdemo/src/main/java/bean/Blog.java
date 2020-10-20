@@ -13,6 +13,7 @@ public  class Blog implements java.io.Serializable {
     private List<Comment> comments;
     Map<String, String> labels;
 
+
     public Blog() {
     }
 

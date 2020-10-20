@@ -6,7 +6,7 @@ import java.util.Map;
 
 public  class Blog implements java.io.Serializable {
 
-    private int id;
+     private int id;
     private String title;
     private User author;
     private String body;

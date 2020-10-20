@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="app.properties">
+    </properties>
+    <!--<settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <setting name="cacheEnabled" value="false"/> 默打打开二级缓存
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+                <setting name="aggressiveLazyLoading" value="true"/> &lt;!&ndash;调用任意方法触发懒加载&ndash;&gt;
+                <setting name="returnInstanceForEmptyRow" value="true"/>是否允许返回空行
+        <setting name="configurationFactory" value="org.coderead.mybatis.LazyTest$ConfigurationFactory"/>
+    </settings>-->
+
+    <typeAliases>
+        <package name="bean"/>
+    </typeAliases>
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name="mapper"/>
+    </mappers>
+</configuration>

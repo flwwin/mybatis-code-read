@@ -55,7 +55,7 @@ public abstract class BaseExecutor implements Executor {
   protected Executor wrapper;
 
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  // 查询操作的结果缓存
+  // 查询操作的结果二级缓存
   protected PerpetualCache localCache;
   // Callable查询的输出参数缓存
   protected PerpetualCache localOutputParameterCache;
@@ -187,7 +187,7 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
-      // 尝试从本地缓存获取结果
+      // 尝试从二级缓存获取结果
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
         // 本地缓存中有结果，则对于CALLABLE语句还需要绑定到IN/INOUT参数上

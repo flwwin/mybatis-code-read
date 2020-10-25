@@ -14,12 +14,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author flw
  */
 public class ExecutorTest {
-
   private Configuration configuration;
   private Connection connection;
   private JdbcTransaction jdbcTransaction;
@@ -100,7 +100,7 @@ public class ExecutorTest {
 
   @Test
   public void sqlSessionTest() {
-    // 二级缓存是一个跨会话
+    // 二级缓存是一个跨会话，这里会命中一级缓存
     SqlSession session = factory.openSession(ExecutorType.BATCH);
     session.selectList("mapper.UserMapper.selectByid", 1);
     session.commit(true); // 提交二级缓存到 二级缓存空间
@@ -108,9 +108,31 @@ public class ExecutorTest {
   }
 
   @Test
+  public void test02() {
+    // 二级缓存是一个跨会话
+    SqlSession session01 = factory.openSession();
+    SqlSession session02 = factory.openSession();
+    UserMapper mapper01 = session01.getMapper(UserMapper.class);
+    UserMapper mapper02 = session01.getMapper(UserMapper.class);
+    mapper01.selectByid(1);
+    mapper02.selectByid(1);
+  }
+
+  @Test
   public void test01() {
       //UserMapper userMapper = new UserMapper();
+    /**
+     * 什么是sqlsession https://www.cnblogs.com/warrior4236/p/13091629.html
+     */
     SqlSession sqlSession = factory.openSession();
+
+    /**
+     * 怎么创建mapper代理对象的呢？
+     * 1：入口：configuration中getMapper方法获取Mpper对象，参数就是接口的class对象，当前的sqlSession对象
+     * 2：Configuration中的mapperRegistry熟悉中getMapper
+     * 3: mapperRegistry 中getMapper方法：1：属性knownMappers获取Mapper对象工厂 mapperProxyFactory 2：mapperProxyFactory：newInstance 创建MapperProxy
+     *     3：MapperProxy中newInstance创建实际的代理对象
+     */
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
     User user = mapper.selectByid(1);
     System.out.println("user = " + user);

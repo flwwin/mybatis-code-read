@@ -123,7 +123,7 @@ public class CachingExecutor implements Executor {
       if (ms.isUseCache() && resultHandler == null) { // 该语句使用缓存且没有输出结果处理器
         // 二级缓存不支持含有输出参数的CALLABLE语句，故在这里进行判断
         ensureNoOutParams(ms, boundSql);
-        // 从缓存中读取结果
+        // 从一级缓存中读取结果
         @SuppressWarnings("unchecked")
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) { // 缓存中没有结果

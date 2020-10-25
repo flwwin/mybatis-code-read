@@ -628,7 +628,7 @@ public class Configuration {
   }
 
   /**
-   * 创建一个执行器
+   * 创建一个执行器（configuration对象，开启缓存的化有缓存，还有拦截器链）
    * @param transaction 事务
    * @param executorType 数据库操作类型
    * @return 执行器
@@ -650,7 +650,7 @@ public class Configuration {
       // 使用CachingExecutor装饰实际执行器
       executor = new CachingExecutor(executor);
     }
-    // 为执行器增加拦截器（插件），以启用各个拦截器的功能
+    // 为执行器增加拦截器（插件），以启用各个拦截器的功能，同时执行一遍拦截器
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }

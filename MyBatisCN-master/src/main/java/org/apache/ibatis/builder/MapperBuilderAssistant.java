@@ -163,8 +163,8 @@ public class MapperBuilderAssistant extends BaseBuilder {
       boolean blocking,
       Properties props) {
     Cache cache = new CacheBuilder(currentNamespace)
-        .implementation(valueOrDefault(typeClass, PerpetualCache.class))
-        .addDecorator(valueOrDefault(evictionClass, LruCache.class))
+        .implementation(valueOrDefault(typeClass, PerpetualCache.class)) //默认的缓存实现 PerpetualCache
+        .addDecorator(valueOrDefault(evictionClass, LruCache.class))  //默认清除策略就是lrucache
         .clearInterval(flushInterval)
         .size(size)
         .readWrite(readWrite)

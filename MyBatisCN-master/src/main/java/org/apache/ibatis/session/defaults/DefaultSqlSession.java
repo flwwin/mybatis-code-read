@@ -40,15 +40,15 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 /**
- * The default implementation for {@link SqlSession}.
- * Note that this class is not Thread-Safe.
+ * 构建sqlSession时候
+ * 1：configuration executor autoCommit
  *
  * @author Clinton Begin
  */
 public class DefaultSqlSession implements SqlSession {
-  // 配置信息
+  // 配置信息 在sqlSessionFactory中用openSession初始化的时候传入
   private final Configuration configuration;
-  // 执行器
+  // 执行器 执行器也是
   private final Executor executor;
   // 是否自动提交
   private final boolean autoCommit;
@@ -302,6 +302,7 @@ public class DefaultSqlSession implements SqlSession {
 
   @Override
   public <T> T getMapper(Class<T> type) {
+    //type：就是mapper接口的class对象
     return configuration.getMapper(type, this);
   }
 

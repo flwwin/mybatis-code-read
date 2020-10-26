@@ -57,6 +57,7 @@ public final class MappedStatement {
   private ResultSetType resultSetType;
   //SQL源码，对应于我们所写在配置文件中的SQL语句。包含占位符，无法直接执行。可以展开分析就是分行的sql语句text。
   private SqlSource sqlSource;
+  //二级缓存
   private Cache cache;
   // 参数们
   private ParameterMap parameterMap;

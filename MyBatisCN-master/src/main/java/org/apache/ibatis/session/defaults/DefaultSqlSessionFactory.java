@@ -44,6 +44,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
 
   @Override
   public SqlSession openSession() {
+    //第一个参数就是默认的执行器类型simpleExecutor，下面提供了自己指定执行器类型的构造器
     return openSessionFromDataSource(configuration.getDefaultExecutorType(), null, false);
   }
 
@@ -97,7 +98,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
   private SqlSession openSessionFromDataSource(ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit) {
     Transaction tx = null;
     try {
-      // 找出要使用的指定环境
+      // 找出要使用的指定环境 configuration是在从sqlSessionFactoryBulider中获取sqlSessionFactory的时候作为参数的时候传入的。
       final Environment environment = configuration.getEnvironment();
       // 从环境中获取事务工厂
       final TransactionFactory transactionFactory = getTransactionFactoryFromEnvironment(environment);

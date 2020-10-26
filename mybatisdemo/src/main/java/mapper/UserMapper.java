@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@CacheNamespace
+@CacheNamespace(blocking = true)
 public interface UserMapper {
 
     //@Select({"select * from users where id=#{userId}"})

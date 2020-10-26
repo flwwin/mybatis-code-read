@@ -31,6 +31,7 @@ public final class LogFactory {
   private static Constructor<? extends Log> logConstructor;
 
   static {
+    //这里注入顺序就是log的设置的优先级
     tryImplementation(LogFactory::useSlf4jLogging);
     tryImplementation(LogFactory::useCommonsLogging);
     tryImplementation(LogFactory::useLog4J2Logging);

@@ -81,7 +81,7 @@ import org.springframework.util.StringUtils;
  *   </bean>
  * }
  * </pre>
- *
+ *mybatis整合Spring时的 实现方便加载Mapper接口，以及将 Mapper 偷梁换柱成 MapperFactoryBean
  * @author Hunter Presnall
  * @author Eduardo Macarron
  *

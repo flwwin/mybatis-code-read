@@ -48,7 +48,7 @@ import org.springframework.beans.factory.FactoryBean;
  * Note that this factory can only inject <em>interfaces</em>, not concrete classes.
  *
  * @author Eduardo Macarron
- *
+ * 生成 Mapper 代理对象的FactoryBean
  * @see SqlSessionTemplate
  */
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {

@@ -77,6 +77,8 @@ import org.springframework.util.ClassUtils;
  * in combination with a {@code SqlSessionFactory}. JTA should be used for transactions which span multiple databases or
  * when container managed transactions (CMT) are being used.
  *
+ * 1:xml配置文件的加载
+ * 2：sqlSessionFactory的创建
  * @author Putthiphong Boonphong
  * @author Hunter Presnall
  * @author Eduardo Macarron
@@ -478,7 +480,7 @@ public class SqlSessionFactoryBean
     this.defaultScriptingLanguageDriver = defaultScriptingLanguageDriver;
   }
 
-  /**
+  /**  创建sqlSessionFactory对象
    * {@inheritDoc}
    */
   @Override
@@ -624,7 +626,7 @@ public class SqlSessionFactoryBean
     return this.sqlSessionFactoryBuilder.build(targetConfiguration);
   }
 
-  /**
+  /** 获取SqlSessionFactory对象
    * {@inheritDoc}
    */
   @Override

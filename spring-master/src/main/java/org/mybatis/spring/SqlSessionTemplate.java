@@ -68,7 +68,7 @@ import org.springframework.dao.support.PersistenceExceptionTranslator;
  * @author Putthiphong Boonphong
  * @author Hunter Presnall
  * @author Eduardo Macarron
- *
+ * 内部维护有 SqlSession 的代理对象，解耦Mapper和SqlSession的关键对象。
  * @see SqlSessionFactory
  * @see MyBatisExceptionTranslator
  */

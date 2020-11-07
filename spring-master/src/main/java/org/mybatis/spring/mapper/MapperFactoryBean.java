@@ -49,6 +49,8 @@ import org.springframework.beans.factory.FactoryBean;
  *
  * @author Eduardo Macarron
  * 生成 Mapper 代理对象的FactoryBean
+ * 1：继承FactoryBean是为了自定义Mapper实例化的操作
+ * 2：继承SqlSessionDaoSupport是为了管理SqlSessionFactory。
  * @see SqlSessionTemplate
  */
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {
@@ -88,6 +90,7 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
   }
 
   /**
+   * 为mapper类创建统一的代理对象
    * {@inheritDoc}
    */
   @Override

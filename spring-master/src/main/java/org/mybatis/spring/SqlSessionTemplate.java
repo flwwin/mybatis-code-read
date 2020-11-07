@@ -414,6 +414,7 @@ public class SqlSessionTemplate implements SqlSession, DisposableBean {
   }
 
   /**
+   * SqlSession对象的动态代理对象
    * Proxy needed to route MyBatis method calls to the proper SqlSession got from Spring's Transaction Manager It also
    * unwraps exceptions thrown by {@code Method#invoke(Object, Object...)} to pass a {@code PersistenceException} to the
    * {@code PersistenceExceptionTranslator}.
@@ -428,6 +429,7 @@ public class SqlSessionTemplate implements SqlSession, DisposableBean {
         if (!isSqlSessionTransactional(sqlSession, SqlSessionTemplate.this.sqlSessionFactory)) {
           // force commit even on non-dirty sessions because some databases require
           // a commit/rollback before calling close()
+          // 如果SqlSession未处于spring事务，那设置未自动提交
           sqlSession.commit(true);
         }
         return result;

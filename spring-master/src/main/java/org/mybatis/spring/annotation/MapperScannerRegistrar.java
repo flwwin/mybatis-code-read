@@ -150,6 +150,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
     return ClassUtils.getPackageName(importingClassMetadata.getClassName());
   }
 
+  //借助Spring的import机制，构造并注册MapperScannerConfigurerBeanDefinition
   /**
    * A {@link MapperScannerRegistrar} for {@link MapperScans}.
    *

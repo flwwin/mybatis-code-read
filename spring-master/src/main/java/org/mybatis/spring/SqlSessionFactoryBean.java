@@ -480,7 +480,7 @@ public class SqlSessionFactoryBean
     this.defaultScriptingLanguageDriver = defaultScriptingLanguageDriver;
   }
 
-  /**  创建sqlSessionFactory对象
+  /**  创建sqlSessionFactory对象初始化的地方
    * {@inheritDoc}
    */
   @Override
@@ -490,6 +490,7 @@ public class SqlSessionFactoryBean
     state((configuration == null && configLocation == null) || !(configuration != null && configLocation != null),
         "Property 'configuration' and 'configLocation' can not specified with together");
 
+    //真正开始构造
     this.sqlSessionFactory = buildSqlSessionFactory();
   }
 
@@ -509,6 +510,7 @@ public class SqlSessionFactoryBean
     final Configuration targetConfiguration;
 
     XMLConfigBuilder xmlConfigBuilder = null;
+    //指定了mybatis-config.xml的路径时
     if (this.configuration != null) {
       targetConfiguration = this.configuration;
       if (targetConfiguration.getVariables() == null) {
@@ -525,16 +527,18 @@ public class SqlSessionFactoryBean
       targetConfiguration = new Configuration();
       Optional.ofNullable(this.configurationProperties).ifPresent(targetConfiguration::setVariables);
     }
-
+    //默认配置
     Optional.ofNullable(this.objectFactory).ifPresent(targetConfiguration::setObjectFactory);
     Optional.ofNullable(this.objectWrapperFactory).ifPresent(targetConfiguration::setObjectWrapperFactory);
     Optional.ofNullable(this.vfs).ifPresent(targetConfiguration::setVfsImpl);
 
+    //别名注册
     if (hasLength(this.typeAliasesPackage)) {
       scanClasses(this.typeAliasesPackage, this.typeAliasesSuperType).stream()
           .filter(clazz -> !clazz.isAnonymousClass()).filter(clazz -> !clazz.isInterface())
           .filter(clazz -> !clazz.isMemberClass()).forEach(targetConfiguration.getTypeAliasRegistry()::registerAlias);
     }
+
 
     if (!isEmpty(this.typeAliases)) {
       Stream.of(this.typeAliases).forEach(typeAlias -> {
@@ -542,7 +546,7 @@ public class SqlSessionFactoryBean
         LOGGER.debug(() -> "Registered type alias: '" + typeAlias + "'");
       });
     }
-
+    //插件注册
     if (!isEmpty(this.plugins)) {
       Stream.of(this.plugins).forEach(plugin -> {
         targetConfiguration.addInterceptor(plugin);
@@ -599,6 +603,7 @@ public class SqlSessionFactoryBean
         this.transactionFactory == null ? new SpringManagedTransactionFactory() : this.transactionFactory,
         this.dataSource));
 
+    // mapper.xml文件地址
     if (this.mapperLocations != null) {
       if (this.mapperLocations.length == 0) {
         LOGGER.warn(() -> "Property 'mapperLocations' was specified but matching resources are not found.");
@@ -608,6 +613,7 @@ public class SqlSessionFactoryBean
             continue;
           }
           try {
+            // 遍历解析xml并注册
             XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(mapperLocation.getInputStream(),
                 targetConfiguration, mapperLocation.toString(), targetConfiguration.getSqlFragments());
             xmlMapperBuilder.parse();
@@ -622,7 +628,7 @@ public class SqlSessionFactoryBean
     } else {
       LOGGER.debug(() -> "Property 'mapperLocations' was not specified.");
     }
-
+    // 将设置好的Configuration交由SqlSessionFactoryBuilder进行构造
     return this.sqlSessionFactoryBuilder.build(targetConfiguration);
   }
 
